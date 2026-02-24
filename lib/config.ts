@@ -18,8 +18,8 @@ export const siteConfig = {
   guideDelivery: "мгновенно после оплаты (бот / email / личный кабинет)",
   guideUpdatedAt: "14 февраля 2026",
 
-  priceNow: "₽ 1 990",
-  priceOld: "₽ 3 990",
+  priceNow: "₽\u00A01\u00A0990",
+  priceOld: "₽\u00A03\u00A0990",
 
   // Социальные сети
   tgChannel: "https://t.me/Inside1mb3",

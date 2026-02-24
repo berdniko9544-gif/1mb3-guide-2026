@@ -303,7 +303,12 @@ body {
 
   /* Add bottom padding to main content to prevent overlap with sticky CTA */
   main {
-    padding-bottom: 90px !important;
+    padding-bottom: 120px !important;
+  }
+
+  /* Ensure final CTA section has extra spacing */
+  section:last-of-type {
+    margin-bottom: 20px;
   }
 
   /* Better spacing on mobile */
