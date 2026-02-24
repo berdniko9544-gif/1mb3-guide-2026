@@ -1,0 +1,55 @@
+
+> 1mb3-landing-2026@1.0.0 dev
+> next dev --turbo
+
+   ▲ Next.js 15.5.12 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://172.19.0.1:3000
+
+ ✓ Starting...
+ ✓ Ready in 2.1s
+ ○ Compiling / ...
+ ✓ Compiled / in 3.3s
+ GET / 200 in 3729ms
+ GET / 200 in 150ms
+ GET / 200 in 98ms
+ ✓ Compiled in 116ms
+ ✓ Compiled in 78ms
+ ✓ Compiled in 419ms
+ ✓ Compiled / in 144ms
+ GET / 200 in 549ms
+ GET / 200 in 320ms
+ GET / 200 in 128ms
+ GET / 200 in 386ms
+ GET / 200 in 387ms
+ ✓ Compiled /api/chat in 369ms
+ POST /api/chat 200 in 451ms
+ GET / 200 in 71ms
+ POST /api/chat 200 in 38ms
+ POST /api/chat 200 in 29ms
+ GET / 200 in 225ms
+ POST /api/chat 200 in 34ms
+ POST /api/chat 200 in 30ms
+ POST /api/chat 200 in 107ms
+ POST /api/chat 200 in 27ms
+ GET / 200 in 538ms
+ POST /api/chat 200 in 36ms
+ POST /api/chat 200 in 42ms
+ GET / 200 in 74ms
+ POST /api/chat 200 in 33ms
+ POST /api/chat 200 in 32ms
+ POST /api/chat 200 in 52ms
+ ✓ Compiled in 103ms
+ GET / 200 in 537ms
+ POST /api/chat 200 in 32ms
+ ✓ Compiled in 57ms
+ ✓ Compiled / in 36ms
+ GET / 200 in 272ms
+ GET / 200 in 156ms
+ ✓ Compiled in 52ms
+ ✓ Compiled in 1207ms
+ ✓ Compiled in 327ms
+ ✓ Compiled in 195ms
+ ✓ Compiled in 143ms
+ ✓ Compiled in 113ms
+[?25h

@@ -1,0 +1,24 @@
+⚠️⚠️⚠️ ВАЖНО! ПРОЧИТАЙТЕ ПЕРЕД ДЕПЛОЕМ ⚠️⚠️⚠️
+
+Когда Vercel спрашивает:
+"Link to existing project? (y/N)"
+
+НУЖНО ОТВЕТИТЬ: N (нет, НЕ да!)
+
+Почему?
+- Это НОВЫЙ Next.js проект
+- vite-react и vite-react-nkv7 - это СТАРЫЕ Vite проекты
+- Если выбрать Vite проект для Next.js - деплой упадёт с ошибкой
+
+Правильная последовательность:
+1. Set up and deploy? → Y (да)
+2. Which scope? → Enter (выбрать аккаунт)
+3. Link to existing project? → N (НЕТ! Создать новый!)
+4. Project name? → Введите имя или Enter
+5. Directory? → Enter
+
+Если случайно ответили Y:
+- Нажмите Ctrl+C
+- Удалите .vercel: Remove-Item -Path ".vercel" -Recurse -Force
+- Запустите: vercel --prod
+- На этот раз ответьте N!
