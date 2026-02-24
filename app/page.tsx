@@ -882,37 +882,6 @@ export default function Page() {
                 📸 @yana__yanoshka
               </a>
             </div>
-
-            {/* Legal row */}
-            <div className="flex flex-col gap-3 text-sm text-white/55 md:flex-row md:items-center md:justify-between">
-              <div>
-                © {new Date().getFullYear()} {siteConfig.brand} · {siteConfig.authorName}
-              </div>
-              <div className="flex flex-wrap items-center gap-4">
-                <Link href="/legal/offer" className="hover:text-white transition-colors">
-                  Оферта
-                </Link>
-                <Link href="/legal/privacy" className="hover:text-white transition-colors">
-                  Политика конфиденциальности
-                </Link>
-                <a
-                  href={supportUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-white transition-colors"
-                  onClick={() => track("support_click", { channel: "telegram" })}
-                >
-                  Поддержка {siteConfig.supportTg}
-                </a>
-                <a
-                  href={`mailto:${siteConfig.supportEmail}`}
-                  className="hover:text-white transition-colors"
-                  onClick={() => track("support_click", { channel: "email" })}
-                >
-                  {siteConfig.supportEmail}
-                </a>
-              </div>
-            </div>
           </div>
         </Container>
       </footer>
