@@ -301,6 +301,11 @@ body {
     transform: scale(0.96);
   }
 
+  /* Move chat widget above sticky CTA on mobile */
+  .fixed.bottom-4.right-4 {
+    bottom: 80px !important;
+  }
+
   /* Add bottom padding to main content to prevent overlap with sticky CTA */
   main {
     padding-bottom: 120px !important;
