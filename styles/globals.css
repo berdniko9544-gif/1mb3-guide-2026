@@ -301,6 +301,11 @@ body {
     transform: scale(0.96);
   }
 
+  /* Add bottom padding to main content to prevent overlap with sticky CTA */
+  main {
+    padding-bottom: 90px !important;
+  }
+
   /* Better spacing on mobile */
   section {
     padding-left: 16px;
@@ -315,6 +320,11 @@ body {
   /* Better modal on mobile */
   .fixed.inset-0 {
     padding: 12px;
+  }
+
+  /* Ensure footer doesn't get hidden */
+  footer {
+    margin-bottom: 0;
   }
 }
 
