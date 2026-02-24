@@ -273,7 +273,7 @@ body {
   line-height: 1;
 }
 
-/* ── Mobile sticky CTA improvements ── */
+/* ── Mobile optimizations ── */
 @media (max-width: 768px) {
   .mobile-sticky-cta {
     position: fixed;
@@ -284,30 +284,114 @@ body {
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.15);
     background: linear-gradient(135deg, #ff425d, #2ed8ff);
-    padding: 14px 18px;
-    font-size: 0.9rem;
+    padding: 16px 20px;
+    font-size: 1rem;
     font-weight: 900;
     color: white;
+    text-align: center;
     box-shadow: 
       0 0 0 1px rgba(255, 255, 255, 0.1) inset,
       0 16px 40px rgba(0, 0, 0, 0.5),
       0 0 60px rgba(255, 66, 93, 0.3);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 52px;
   }
 
   .mobile-sticky-cta:active {
-    transform: scale(0.98);
+    transform: scale(0.96);
+  }
+
+  /* Better spacing on mobile */
+  section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Larger touch targets */
+  button, a {
+    min-height: 44px;
+  }
+
+  /* Better modal on mobile */
+  .fixed.inset-0 {
+    padding: 12px;
   }
 }
 
 /* ── Improved text readability ── */
 @media (max-width: 640px) {
   body {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 8vw, 3rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 7vw, 2.5rem) !important;
+    line-height: 1.15 !important;
+  }
+
+  h3 {
+    font-size: clamp(1.25rem, 5vw, 1.5rem) !important;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  /* Better card spacing on mobile */
+  .neon-card,
+  .neon-card-red {
+    padding: 1.25rem;
+  }
+
+  /* Improve grid gaps on mobile */
+  .grid {
+    gap: 1rem;
+  }
+
+  /* Better image handling */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ── Extra small devices ── */
+@media (max-width: 375px) {
+  body {
     font-size: 15px;
   }
 
-  h1, h2, h3 {
-    letter-spacing: -0.02em;
+  h1 {
+    font-size: clamp(1.75rem, 9vw, 2.5rem) !important;
+  }
+
+  .mobile-sticky-cta {
+    font-size: 0.9rem;
+    padding: 14px 16px;
+  }
+
+  .neon-card,
+  .neon-card-red {
+    padding: 1rem;
+  }
+}
+
+/* ── Landscape mobile ── */
+@media (max-width: 896px) and (orientation: landscape) {
+  section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 6vw, 2.5rem) !important;
   }
 }
 
