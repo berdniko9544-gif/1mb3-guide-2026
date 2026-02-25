@@ -1061,12 +1061,14 @@ export default function Page() {
         </div>
       )}
 
-      <button
-        onClick={() => openStep("sticky_mobile")}
-        className="mobile-sticky-cta md:hidden"
-      >
-        Купить гайд — {siteConfig.priceNow}
-      </button>
+      {!stepOpen && (
+        <button
+          onClick={() => openStep("sticky_mobile")}
+          className="mobile-sticky-cta md:hidden"
+        >
+          Купить гайд — {siteConfig.priceNow}
+        </button>
+      )}
 
       <ChatWidget />
       <ExitIntentPopup />
