@@ -29,9 +29,14 @@ export function YooKassaPayment() {
       <Button
         type="submit"
         size="lg"
-        className="w-full text-xl py-4 shadow-[0_12px_48px_rgba(120,140,255,.4)]"
+        className="w-full text-xl py-5 md:py-4 min-h-[64px] md:min-h-[56px] shadow-[0_12px_48px_rgba(120,140,255,.4)] hover:shadow-[0_16px_64px_rgba(120,140,255,.5)]"
+        magnetic={false}
       >
-        Купить гайд — ₽ 1990
+        <span className="flex items-center justify-center gap-2">
+          <span>Купить гайд</span>
+          <span className="text-2xl">→</span>
+          <span className="font-black">₽ 1990</span>
+        </span>
       </Button>
 
       {/* YooKassa logo - small and subtle */}

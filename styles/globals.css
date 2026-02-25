@@ -508,28 +508,36 @@ body {
 @media (max-width: 768px) {
   .mobile-sticky-cta {
     position: fixed;
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
     z-index: 65;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: linear-gradient(135deg, #ff425d, #2ed8ff);
-    padding: 16px 20px;
-    font-size: 1rem;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #ff425d 0%, #ff5c73 50%, #2ed8ff 100%);
+    padding: 20px 24px;
+    font-size: 1.125rem;
     font-weight: 900;
     color: white;
     text-align: center;
-    box-shadow: 
-      0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-      0 16px 40px rgba(0, 0, 0, 0.5),
-      0 0 60px rgba(255, 66, 93, 0.3);
+    letter-spacing: -0.01em;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+      0 8px 16px rgba(0, 0, 0, 0.3),
+      0 20px 48px rgba(0, 0, 0, 0.4),
+      0 0 80px rgba(255, 66, 93, 0.4);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    min-height: 52px;
+    min-height: 64px;
+    backdrop-filter: blur(12px);
   }
 
   .mobile-sticky-cta:active {
-    transform: scale(0.96);
+    transform: scale(0.97);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+      0 4px 8px rgba(0, 0, 0, 0.3),
+      0 12px 32px rgba(0, 0, 0, 0.5),
+      0 0 60px rgba(255, 66, 93, 0.5);
   }
 
   /* Move chat widget above sticky CTA on mobile */
@@ -620,17 +628,44 @@ body {
   }
 
   h1 {
-    font-size: clamp(1.75rem, 9vw, 2.5rem) !important;
+    font-size: clamp(2rem, 9vw, 2.8rem) !important;
+    line-height: 1.1 !important;
   }
 
   .mobile-sticky-cta {
-    font-size: 0.9rem;
-    padding: 14px 16px;
+    font-size: 1.05rem;
+    padding: 18px 20px;
+    min-height: 60px;
   }
 
   .neon-card,
   .neon-card-red {
-    padding: 1rem;
+    padding: 1.25rem;
+    border-radius: 16px;
+  }
+
+  /* Larger buttons on mobile */
+  button, a[class*="btn"] {
+    min-height: 48px !important;
+    font-size: 1rem !important;
+  }
+
+  /* Hero section improvements */
+  section:first-of-type {
+    padding-top: 6rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  /* Better spacing for cards */
+  .grid {
+    gap: 1rem !important;
+  }
+
+  /* Modal improvements on mobile */
+  [role="dialog"] {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+    border-radius: 24px !important;
   }
 }
 
