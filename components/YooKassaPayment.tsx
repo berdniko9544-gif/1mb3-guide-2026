@@ -1,76 +1,50 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Button } from './Button';
 
 export function YooKassaPayment() {
-  useEffect(() => {
-    // Load YooKassa script
-    const script = document.createElement('script');
-    script.src = 'https://yookassa.ru/integration/simplepay/js/yookassa_construct_form.js?v=1.33.0';
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   return (
-    <>
-      <link
-        rel="stylesheet"
-        href="https://yookassa.ru/integration/simplepay/css/yookassa_construct_form.css?v=1.33.0"
+    <form
+      action="https://yookassa.ru/integration/simplepay/payment"
+      method="post"
+      acceptCharset="utf-8"
+      className="w-full"
+    >
+      {/* Hidden inputs for YooKassa configuration */}
+      <input
+        name="shopSuccessURL"
+        type="hidden"
+        value="https://disk.yandex.ru/i/wg1CGVedSqWvWQ"
       />
-      <form
-        className="yoomoney-payment-form"
-        action="https://yookassa.ru/integration/simplepay/payment"
-        method="post"
-        acceptCharset="utf-8"
+      <input
+        name="shopFailURL"
+        type="hidden"
+        value="https://t.me/Inside1mb3"
+      />
+      <input name="customerNumber" type="hidden" value="Гайд по нейросетям" />
+      <input name="sum" type="hidden" value="1990" />
+      <input name="shopId" type="hidden" value="1250536" />
+
+      {/* Custom styled button */}
+      <Button
+        type="submit"
+        size="lg"
+        className="w-full text-xl py-4 shadow-[0_12px_48px_rgba(120,140,255,.4)]"
       >
-        <div className="ym-hidden-inputs">
-          <input
-            name="shopSuccessURL"
-            type="hidden"
-            value="https://disk.yandex.ru/i/wg1CGVedSqWvWQ"
-          />
-          <input
-            name="shopFailURL"
-            type="hidden"
-            value="https://t.me/Inside1mb3"
-          />
-        </div>
+        Купить гайд — ₽ 1990
+      </Button>
 
-        <input name="customerNumber" type="hidden" value="Гайд по нейросетям" />
-
-        <div className="ym-payment-btn-block">
-          <div className="ym-input-icon-rub ym-display-none">
-            <input
-              name="sum"
-              placeholder="0.00"
-              className="ym-input ym-sum-input ym-required-input"
-              type="number"
-              step="any"
-              value="1990"
-            />
-          </div>
-          <button
-            data-text="Купить"
-            className="ym-btn-pay ym-result-price"
-            type="submit"
-          >
-            <span className="ym-text-crop">Купить</span>{' '}
-            <span className="ym-price-output"> 1&nbsp;990,00&nbsp;₽</span>
-          </button>
-          <img
-            src="https://yookassa.ru/integration/simplepay/img/iokassa-gray.svg?v=1.33.0"
-            className="ym-logo"
-            width="114"
-            height="27"
-            alt="ЮKassa"
-          />
-        </div>
-        <input name="shopId" type="hidden" value="1250536" />
-      </form>
-    </>
+      {/* YooKassa logo - small and subtle */}
+      <div className="flex items-center justify-center gap-2 mt-3 opacity-40">
+        <span className="text-xs text-white/60">Оплата через</span>
+        <img
+          src="https://yookassa.ru/integration/simplepay/img/iokassa-gray.svg?v=1.33.0"
+          width="80"
+          height="19"
+          alt="ЮKassa"
+          className="opacity-60"
+        />
+      </div>
+    </form>
   );
 }
