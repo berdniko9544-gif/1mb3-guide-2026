@@ -6,14 +6,32 @@
   --bg2: #0b1424;
 
   --a1: #ff425d;
+  --a1-dark: #e63854;
+  --a1-light: #ff5c73;
   --a2: #2ed8ff;
+  --a2-dark: #1ac5f0;
+  --a2-light: #4de0ff;
   --a3: #6da8ff;
+  --accent: #8b5cf6;
 
   --text: #f8fafc;
+  --text-muted: rgba(248, 250, 252, 0.7);
+  
+  --gray-950: #0a0e1a;
+  --gray-900: #0f1420;
+  --gray-800: #1a1f2e;
+  --gray-700: #2a3142;
 }
 
 html {
   scroll-behavior: smooth;
+  font-size: 17px;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
 }
 
 body {
@@ -22,6 +40,12 @@ body {
     radial-gradient(1000px 540px at 12% 12%, rgba(255, 66, 93, 0.09), transparent 62%),
     radial-gradient(1100px 620px at 88% 18%, rgba(46, 216, 255, 0.11), transparent 64%),
     linear-gradient(180deg, var(--bg0), var(--bg1) 45%, var(--bg2));
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
@@ -71,24 +95,45 @@ body {
 
 .neon-card,
 .neon-card-red {
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px) saturate(180%);
+  transform-style: preserve-3d;
+  position: relative;
 }
 
 .neon-card {
-  background:
-    linear-gradient(150deg, rgba(46, 216, 255, 0.06), rgba(255, 66, 93, 0.04));
+  background: rgba(255, 255, 255, 0.03);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 0 24px rgba(46, 216, 255, 0.05);
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 16px 32px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(46, 216, 255, 0.03);
+}
+
+.neon-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(46, 216, 255, 0.08), rgba(255, 66, 93, 0.06));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.neon-card:hover::before {
+  opacity: 1;
 }
 
 .neon-card-red {
-  background:
-    linear-gradient(150deg, rgba(255, 66, 93, 0.14), rgba(255, 66, 93, 0.06));
+  background: rgba(255, 255, 255, 0.03);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 0 26px rgba(255, 66, 93, 0.16);
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 16px 32px rgba(255, 66, 93, 0.12),
+    0 0 0 1px rgba(255, 66, 93, 0.08);
 }
 
 .cyber-grid {
@@ -173,6 +218,84 @@ body {
   color: rgba(255, 255, 255, 0.84);
 }
 
+/* ── Animated Mesh Gradient Background ── */
+@keyframes meshMove1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+}
+
+@keyframes meshMove2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-30px, 30px) scale(0.9); }
+  66% { transform: translate(20px, -20px) scale(1.1); }
+}
+
+@keyframes meshMove3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(15px, 15px) scale(1.05); }
+}
+
+.mesh-gradient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mesh-gradient::before,
+.mesh-gradient::after,
+.mesh-gradient > div {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+}
+
+.mesh-gradient::before {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--a1) 0%, transparent 70%);
+  top: -10%;
+  left: -10%;
+  animation: meshMove1 20s ease-in-out infinite;
+}
+
+.mesh-gradient::after {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, var(--a2) 0%, transparent 70%);
+  bottom: -15%;
+  right: -15%;
+  animation: meshMove2 25s ease-in-out infinite;
+}
+
+/* ── Noise Texture Overlay ── */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ── Grid Pattern Background ── */
+.grid-pattern {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+}
+
 /* ── Ticker social proof ── */
 @keyframes tickerScroll {
   from { transform: translateX(0); }
@@ -189,19 +312,127 @@ body {
   animation-play-state: paused;
 }
 
-/* ── neon-card hover lift + glow ── */
+/* ── neon-card hover lift + glow with 3D depth ── */
 .neon-card {
-  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.32s ease, border-color 0.32s ease;
+  transition: 
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.4s ease;
 }
 
 .neon-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(46, 216, 255, 0.28);
+  transform: translateY(-8px) translateZ(20px);
+  border-color: rgba(46, 216, 255, 0.25);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 0 0 1px rgba(46, 216, 255, 0.08),
-    0 0 45px rgba(46, 216, 255, 0.12),
-    0 24px 60px rgba(0, 0, 0, 0.40);
+    0 0 0 1px rgba(46, 216, 255, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.05),
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 60px rgba(46, 216, 255, 0.15);
+}
+
+/* ── Magnetic button effect ── */
+@keyframes magneticPulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.magnetic-btn {
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.magnetic-btn::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: radial-gradient(circle, var(--a1) 0%, var(--a2) 100%);
+  opacity: 0;
+  filter: blur(12px);
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.magnetic-btn:hover::before {
+  opacity: 0.4;
+  animation: magneticPulse 2s ease-in-out infinite;
+}
+
+.magnetic-btn:active {
+  transform: scale(0.98);
+}
+
+/* ── Ripple effect ── */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  animation: ripple 0.6s ease-out;
+}
+
+/* ── Scroll indicator ── */
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.5; }
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  z-index: 10;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+.scroll-indicator-icon {
+  width: 24px;
+  height: 36px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  position: relative;
+}
+
+.scroll-indicator-icon::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+  animation: scrollWheel 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollWheel {
+  0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+  100% { transform: translateX(-50%) translateY(12px); opacity: 0; }
 }
 
 /* ── Shimmer on CTA button ── */

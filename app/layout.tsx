@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
-import { Web3Background } from "@/components/Web3Background";
+import { MeshGradient } from "@/components/MeshGradient";
 import { siteConfig } from "@/lib/config";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
   display: "swap",
+  variable: "--font-inter",
 });
 
 export const viewport: Viewport = {
@@ -17,17 +18,74 @@ export const viewport: Viewport = {
   themeColor: "#050913",
 };
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
-  title: `${siteConfig.brand} — ${siteConfig.productName}`,
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${siteConfig.brand} — ${siteConfig.productName}`,
+    template: `%s | ${siteConfig.brand}`,
+  },
   description:
-    "Цифровой гайд 2026 по заработку на ИИ: 12 направлений, инструменты, план на 30 дней, юридические нюансы и шаблоны для старта.",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+    "Цифровой гайд 2026 по заработку на ИИ: 12 направлений монетизации, инструменты, план на 30 дней, юридические нюансы и шаблоны для старта. Для РФ/СНГ.",
+  keywords: [
+    "заработок на ИИ",
+    "искусственный интеллект",
+    "монетизация AI",
+    "нейросети",
+    "фриланс",
+    "цифровые продукты",
+    "AI бизнес",
+    "ChatGPT",
+    "Midjourney",
+    "гайд 2026",
+  ],
+  authors: [{ name: "Яна", url: siteUrl }],
+  creator: "Яна",
+  publisher: siteConfig.brand,
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
   openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    url: siteUrl,
+    siteName: siteConfig.brand,
     title: `${siteConfig.brand} — ${siteConfig.productName}`,
     description:
-      "Понятный состав цифрового гайда: что внутри, кому подходит, как получить доступ после оплаты.",
+      "Практичный гайд по заработку на ИИ: 12 направлений, инструменты, план действий на 30 дней. Для РФ/СНГ рынка.",
+    images: [
+      {
+        url: "/hero.png",
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.productName} — превью`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.brand} — ${siteConfig.productName}`,
+    description:
+      "Цифровой гайд 2026 по заработку на ИИ: 12 направлений, инструменты, план на 30 дней.",
     images: ["/hero.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -59,7 +117,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
       </head>
       <body className={`${inter.className} min-h-dvh antialiased`}>
-        <Web3Background />{children}
+        <MeshGradient />
+        {children}
       </body>
     </html>
   );

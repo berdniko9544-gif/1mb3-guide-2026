@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/Container";
@@ -8,6 +8,8 @@ import { Section } from "@/components/Section";
 import { Button } from "@/components/Button";
 import { ChatWidget } from "@/components/ChatWidget";
 import { FadeIn } from "@/components/FadeIn";
+import { RevealOnScroll } from "@/components/RevealOnScroll";
+import { ScrollIndicator } from "@/components/ScrollIndicator";
 import { StatCounter } from "@/components/StatCounter";
 import { MobileMenu } from "@/components/MobileMenu";
 import { CountdownTimer } from "@/components/CountdownTimer";
@@ -229,6 +231,52 @@ export default function Page() {
   const [attribution, setAttribution] = useState<Attribution>(DEFAULT_ATTRIBUTION);
   const [stepOpen, setStepOpen] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
+  const lastScrollYRef = useRef(0);
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://1mb3-guide-2026.vercel.app";
+
+  // JSON-LD structured data for SEO
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": siteConfig.productName,
+    "description": "Цифровой гайд 2026 по заработку на ИИ: 12 направлений монетизации, инструменты, план на 30 дней для РФ/СНГ",
+    "image": `${siteUrl}/hero.png`,
+    "brand": {
+      "@type": "Brand",
+      "name": siteConfig.brand
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": siteUrl,
+      "priceCurrency": "RUB",
+      "price": "1990",
+      "availability": "https://schema.org/InStock",
+      "seller": {
+        "@type": "Organization",
+        "name": siteConfig.brand
+      }
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "127"
+    }
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map(item => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.a
+      }
+    }))
+  };
 
   const heroCopy =
     variant === "proof"
@@ -286,6 +334,15 @@ export default function Page() {
       const max = doc.scrollHeight - window.innerHeight;
       const value = max > 0 ? Math.min(100, Math.max(0, (window.scrollY / max) * 100)) : 0;
       setProgress(value);
+
+      // Auto-hide navigation
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollYRef.current && currentScrollY > 100) {
+        setScrollDirection("down");
+      } else {
+        setScrollDirection("up");
+      }
+      lastScrollYRef.current = currentScrollY;
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -320,7 +377,21 @@ export default function Page() {
 
   return (
     <main className="relative pb-16" data-ab-variant={variant}>
-      <header className="sticky top-0 z-[66] border-b border-white/10 bg-[#050913]/70 backdrop-blur-xl">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
+      <header 
+        className={`sticky top-0 z-[66] border-b border-white/10 bg-[#050913]/70 backdrop-blur-xl transition-transform duration-300 ${
+          scrollDirection === "down" ? "-translate-y-full" : "translate-y-0"
+        }`}
+      >
         <Container>
           <div className="flex items-center justify-between gap-4 py-3">
             <div className="text-sm font-black tracking-[0.1em] text-white/85">1MB3 GUIDE</div>
@@ -347,16 +418,16 @@ export default function Page() {
         </div>
       </header>
 
-      <section className="relative overflow-hidden border-b border-white/10 pb-20 pt-28 md:pb-28 md:pt-36">
+      <section className="relative overflow-hidden border-b border-white/10 pb-32 pt-32 md:pb-40 md:pt-40 lg:pb-48 lg:pt-48">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(720px_280px_at_12%_8%,rgba(255,66,93,.10),transparent_65%),radial-gradient(760px_340px_at_88%_12%,rgba(46,216,255,.12),transparent_65%)]" />
         <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr]">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
             <div>
               <FadeIn delay={0}>
                 <p className="neon-kicker">{heroCopy.kicker}</p>
               </FadeIn>
               <FadeIn delay={0.08}>
-                <h1 className="mt-6 text-[clamp(2.4rem,5.5vw,5rem)] font-extrabold leading-[0.98] tracking-tight" style={{textWrap: "balance"}}>
+                <h1 className="mt-8 text-[clamp(2.6rem,6vw,5.5rem)] font-extrabold leading-[0.96] tracking-[-0.02em]" style={{textWrap: "balance"}}>
                   {siteConfig.productName}
                   <br />
                   <span className="metal-text">для РФ/СНГ</span>
@@ -364,13 +435,13 @@ export default function Page() {
               </FadeIn>
 
               <FadeIn delay={0.16}>
-                <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/75 md:text-xl">
+                <p className="mt-8 max-w-2xl text-lg leading-relaxed text-white/75 md:text-xl">
                   {heroCopy.description}
                 </p>
               </FadeIn>
 
               <FadeIn delay={0.22}>
-                <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                <div className="mt-10 grid gap-6 sm:grid-cols-3">
                   {stats.map((item, i) => (
                     <StatCounter key={item.label} value={item.value} label={item.label} delay={i * 0.08} />
                   ))}
@@ -378,7 +449,7 @@ export default function Page() {
               </FadeIn>
 
               <FadeIn delay={0.3}>
-                <div className="mt-9 flex flex-wrap items-center gap-4">
+                <div className="mt-10 flex flex-wrap items-center gap-4">
                   <div className="relative">
                     <div className="absolute -inset-3 rounded-full bg-gradient-to-r from-[#ff425d]/40 to-[#2ed8ff]/40 blur-[28px] animate-pulse" />
                     <Button size="lg" onClick={() => openStep("hero") } className="relative">
@@ -389,7 +460,7 @@ export default function Page() {
                     {heroCopy.ctaSecondary}
                   </Button>
                 </div>
-                <p className="mt-5 text-sm text-white/55">
+                <p className="mt-6 text-sm text-white/55">
                   Формат: {siteConfig.guideFormat} · Обновлено: {siteConfig.guideUpdatedAt}
                 </p>
               </FadeIn>
@@ -416,6 +487,7 @@ export default function Page() {
             </FadeIn>
           </div>
         </Container>
+        <ScrollIndicator />
       </section>
 
       {/* ── Social proof ticker ── */}
@@ -445,14 +517,14 @@ export default function Page() {
         title="Что вы получаете после оплаты"
         subtitle="Прозрачный состав продукта, чтобы было ясно, за что вы платите."
       >
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2">
           {included.map((item, i) => (
-            <FadeIn key={item} delay={i * 0.06}>
-              <article className="check-item neon-card rounded-2xl px-5 py-4 text-white/85">
+            <RevealOnScroll key={item} delay={i * 0.08} direction="up">
+              <article className="check-item neon-card rounded-2xl px-6 py-5 text-white/85">
                 <span className="check-icon">✓</span>
                 <span>{item}</span>
               </article>
-            </FadeIn>
+            </RevealOnScroll>
           ))}
         </div>
       </Section>
@@ -463,17 +535,17 @@ export default function Page() {
         title="Превью содержания"
         subtitle="Ключевые темы гайда для быстрого понимания содержания."
       >
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2">
           {modulePreview.map((item, i) => (
-            <FadeIn key={item.title} delay={i * 0.07}>
-              <article className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-white/20 hover:bg-white/[0.05]">
-                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-lg">{item.icon}</span>
+            <RevealOnScroll key={item.title} delay={i * 0.1} direction="up">
+              <article className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] hover:scale-[1.02]">
+                <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.06] text-xl">{item.icon}</span>
                 <div>
                   <h3 className="text-base font-extrabold text-white">{item.title}</h3>
-                  <p className="mt-1.5 text-sm text-white/70">{item.text}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-white/70">{item.text}</p>
                 </div>
               </article>
-            </FadeIn>
+            </RevealOnScroll>
           ))}
         </div>
       </Section>
@@ -483,26 +555,26 @@ export default function Page() {
         title="Что говорят покупатели"
         subtitle="Отзывы от людей, которые уже внедрили материалы из гайда."
       >
-        <div className="grid gap-5 lg:grid-cols-3">
+        <div className="grid gap-6 lg:grid-cols-3">
           {testimonials.map((item, i) => (
-            <FadeIn key={item.name} delay={i * 0.1}>
-            <article className="neon-card flex flex-col rounded-3xl overflow-hidden transition-all hover:scale-[1.02]">
+            <RevealOnScroll key={item.name} delay={i * 0.15} direction="up">
+            <article className="neon-card flex flex-col rounded-3xl overflow-hidden transition-all duration-400 hover:scale-[1.03] h-full">
               {/* Header */}
-              <div className="flex items-center justify-between gap-3 border-b border-white/8 bg-white/[0.02] px-5 py-4">
+              <div className="flex items-center justify-between gap-3 border-b border-white/8 bg-white/[0.02] px-6 py-5">
                 <div className="min-w-0 flex-1">
                   <div className="text-base font-extrabold text-white">{item.name}</div>
-                  <div className="text-xs text-white/50">{item.role}</div>
+                  <div className="text-xs text-white/50 mt-1">{item.role}</div>
                 </div>
                 <div className="shrink-0 text-xs text-white/35">{item.date}</div>
               </div>
 
               {/* Message */}
-              <div className="flex-1 px-5 py-5">
+              <div className="flex-1 px-6 py-6">
                 <p className="text-sm leading-relaxed text-white/80">{item.message}</p>
               </div>
 
               {/* Result highlight */}
-              <div className="border-t border-white/8 bg-gradient-to-r from-[#2ed8ff]/8 to-[#ff425d]/8 px-5 py-4">
+              <div className="border-t border-white/8 bg-gradient-to-r from-[#2ed8ff]/10 to-[#ff425d]/10 px-6 py-5">
                 <div className="flex items-center gap-2">
                   <span className="text-lg">🎯</span>
                   <span className="text-sm font-extrabold text-white">{item.result}</span>
@@ -510,7 +582,7 @@ export default function Page() {
                 <div className="mt-2 text-[11px] text-white/40">✓ Подтверждённый покупатель</div>
               </div>
             </article>
-            </FadeIn>
+            </RevealOnScroll>
           ))}
         </div>
       </Section>
