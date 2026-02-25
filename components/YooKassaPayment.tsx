@@ -3,44 +3,24 @@
 import { Button } from './Button';
 
 export function YooKassaPayment() {
-  return (
-    <div className="w-full relative">
-      <form
-        action="https://yookassa.ru/integration/simplepay/payment"
-        method="post"
-        acceptCharset="utf-8"
-        className="w-full"
-        style={{ position: 'relative' }}
-      >
-        {/* Hidden inputs for YooKassa configuration */}
-        <input
-          name="shopSuccessURL"
-          type="hidden"
-          value="https://disk.yandex.ru/i/wg1CGVedSqWvWQ"
-        />
-        <input
-          name="shopFailURL"
-          type="hidden"
-          value="https://t.me/Inside1mb3"
-        />
-        <input name="customerNumber" type="hidden" value="Гайд по нейросетям" />
-        <input name="sum" type="hidden" value="1990" />
-        <input name="shopId" type="hidden" value="1250536" />
+  // Прямая ссылка на оплату YooKassa (без SimplePay формы)
+  const paymentUrl = `https://yookassa.ru/integration/simplepay/payment?shopId=1250536&sum=1990&customerNumber=Гайд%20по%20нейросетям&shopSuccessURL=${encodeURIComponent('https://disk.yandex.ru/i/wg1CGVedSqWvWQ')}&shopFailURL=${encodeURIComponent('https://t.me/Inside1mb3')}`;
 
-        {/* Custom styled button */}
-        <Button
-          type="submit"
-          size="lg"
-          className="w-full text-xl py-5 md:py-4 min-h-[64px] md:min-h-[56px] shadow-[0_12px_48px_rgba(120,140,255,.4)] hover:shadow-[0_16px_64px_rgba(120,140,255,.5)] relative z-10"
-          magnetic={false}
-        >
-          <span className="flex items-center justify-center gap-2">
-            <span>Купить гайд</span>
-            <span className="text-2xl">→</span>
-            <span className="font-black">₽ 1990</span>
-          </span>
-        </Button>
-      </form>
+  return (
+    <div className="w-full">
+      {/* Custom styled button as link */}
+      <Button
+        href={paymentUrl}
+        size="lg"
+        className="w-full text-xl py-5 md:py-4 min-h-[64px] md:min-h-[56px] shadow-[0_12px_48px_rgba(120,140,255,.4)] hover:shadow-[0_16px_64px_rgba(120,140,255,.5)]"
+        magnetic={false}
+      >
+        <span className="flex items-center justify-center gap-2">
+          <span>Купить гайд</span>
+          <span className="text-2xl">→</span>
+          <span className="font-black">₽ 1990</span>
+        </span>
+      </Button>
 
       {/* YooKassa logo - small and subtle */}
       <div className="flex items-center justify-center gap-2 mt-3 opacity-40">
